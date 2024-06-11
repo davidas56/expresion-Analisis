@@ -1,17 +1,7 @@
 from flask import Flask, request, jsonify
-from ibm_watson import NaturalLanguageUnderstandingV1
-from ibm_watson.natural_language_understanding_v1 import Features, EmotionOptions
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from .nlp import analyze_emotion  # Importar la función de análisis desde nlp.py
 
 app = Flask(__name__)
-
-# Configuración de la autenticación de Watson NLP
-authenticator = IAMAuthenticator('YOUR_API_KEY')
-natural_language_understanding = NaturalLanguageUnderstandingV1(
-    version='2021-03-25',
-    authenticator=authenticator
-)
-natural_language_understanding.set_service_url('YOUR_SERVICE_URL')
 
 @app.route('/')
 def index():
@@ -23,14 +13,8 @@ def detect_emotion():
     if not text:
         return jsonify({'error': 'Text is required'}), 400
 
-    response = natural_language_understanding.analyze(
-        text=text,
-        features=Features(emotion=EmotionOptions())
-    ).get_result()
-
-    emotions = response['emotion']['document']['emotion']
+    emotions = analyze_emotion(text)
     
-    # Formatear la salida según lo especificado
     formatted_response = {
         'status': 'success',
         'emotions': emotions
