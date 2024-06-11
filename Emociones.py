@@ -28,8 +28,15 @@ def detect_emotion():
         features=Features(emotion=EmotionOptions())
     ).get_result()
 
-    return jsonify(response['emotion']['document']['emotion'])
+    emotions = response['emotion']['document']['emotion']
+    
+    # Formatear la salida según lo especificado
+    formatted_response = {
+        'status': 'success',
+        'emotions': emotions
+    }
+
+    return jsonify(formatted_response)
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
