@@ -3,4 +3,10 @@
 - Dependencias:
 - pip install flask 
 - pip install ibm-watson 
-- python server.py
+- pip install pylint
+- Ejecutar server python
+- pylint server.py
+- Para asegurarte de que todo el código cumple con las mejores prácticas, ejecuta pylint en el proyecto completo:
+- pylint emotion_detector
+- Ejecutar los test :
+- pylint server.py emotion_detector

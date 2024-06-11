@@ -1,3 +1,7 @@
+"""
+Server module for running the Flask application.
+"""
+
 from emotion_detector.app import app
 
 if __name__ == '__main__':
